@@ -3,8 +3,8 @@
 class Usuario {
     // Attributes
     private $idusuario;
-    private $dislogin;
-    private $dissenha;
+    private $deslogin;
+    private $dessenha;
     private $dtcadastro;
 
     // Methods
@@ -18,17 +18,50 @@ class Usuario {
         if (count($results[0]) > 0) {
             $row = $results[0];
             $this->setIdusuario($row['idusuario']);
-            $this->setDislogin($row['deslogin']);
-            $this->setDissenha($row['dessenha']);
+            $this->setDeslogin($row['deslogin']);
+            $this->setDessenha($row['dessenha']);
             $this->setDtcadastro(new DateTime($row['dtcadastro']));
+        }
+    }
+
+    public static function getList() {
+        $sql = new Sql();
+
+        return $sql->select("SELECT * FROM tb_usuario ORDER BY deslogin");
+    }
+
+    public static function search($login) {
+        $sql = new Sql();
+
+        return $sql->select("SELECT * FROM tb_usuario WHERE deslogin LIKE :SEARCH ORDER BY deslogin", array(
+            ":SEARCH" => "%" . $login . "%"
+        ));
+    }
+
+    public function login($login, $password) {
+        $sql = new Sql();
+
+        $results = $sql->select("SELECT * FROM tb_usuario WHERE deslogin = :LOGIN AND dessenha = :PASSWORD", array(
+            ":LOGIN" => $login,
+            ":PASSWORD" => $password
+        ));
+
+        if (count($results) > 0) {
+            $row = $results[0];
+            $this->setIdusuario($row['idusuario']);
+            $this->setDeslogin($row['deslogin']);
+            $this->setDessenha($row['dessenha']);
+            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+        } else {
+            throw new Exception("Invalids login and password.");
         }
     }
 
     public function __toString() {
         return json_encode(array(
             "idusuario" => $this->getIdusuario(),
-            "dislogin" => $this->getDislogin(),
-            "dissenha" => $this->getDissenha(),
+            "deslogin" => $this->getDeslogin(),
+            "dessenha" => $this->getDessenha(),
             "dtcadastro" => $this->getDtcadastro()->format("d/m/Y H:i:s")
         ));
     }
@@ -40,17 +73,17 @@ class Usuario {
     public function setIdusuario($idusuario) {
         $this->idusuario = $idusuario;
     }
-    public function getDislogin() {
-        return $this->dislogin;
+    public function getDeslogin() {
+        return $this->deslogin;
     }
-    public function setDislogin($dislogin) {
-        $this->dislogin = $dislogin;
+    public function setDeslogin($deslogin) {
+        $this->deslogin = $deslogin;
     }
-    public function getDissenha() {
-        return $this->dissenha;
+    public function getDessenha() {
+        return $this->dessenha;
     }
-    public function setDissenha($dissenha) {
-        $this->dissenha = $dissenha;
+    public function setDessenha($dessenha) {
+        $this->dessenha = $dessenha;
     }
     public function getDtcadastro() {
         return $this->dtcadastro;

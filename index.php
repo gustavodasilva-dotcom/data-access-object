@@ -3,6 +3,8 @@
 require_once('config.php');
 
 /**
+ * SELECTING ALL USERS USING 'select()' METHOD
+ * 
  * $sql = new Sql();
  *
  * $usuarios = $sql->select("SELECT * FROM tb_usuario");
@@ -10,10 +12,42 @@ require_once('config.php');
  * echo json_encode($usuarios);
  */
 
-$usuario = new Usuario();
+/**
+ * SELECTING A SPECIFIC USER USING THE USER'S ID IN 'loadById()'
+ * 
+ * $usuario = new Usuario();
+ * 
+ * $usuario->loadById(5);
+ */
 
-$usuario->loadById(5);
+/**
+ * LISTING ALL THE USERS WITH 'getList()'
+ * 
+ * $lista = $usuario::getList();
+ *
+ * echo $usuario;
+ *
+ * echo json_encode($lista);
+ */
 
-echo $usuario;
+/** 
+ * SEARCHING FOR A SPECIFIC USER USING THE USER'S NAME
+ * 
+ * $search = Usuario::search("jo");
+ *
+ * echo json_encode($search);
+ */
+
+/**
+ * SEARCHING FOR A SPECIFIC USER USING THE USER'S LOGIN AND PASSWORD
+ * 
+ * $usuario = new Usuario();
+ * 
+ * $usuario->login("jose_dasilva", "jose_jose123");
+ * 
+ * echo $usuario;
+ */
+
+
 
 ?>
