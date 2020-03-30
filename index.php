@@ -58,11 +58,26 @@ require_once('config.php');
  * echo $aluno;
  */
 
+/**
+ * CHANGING DATA FROM A SPECIFIC USER WITH 'update()'
+ * 
+ * $usuario = new Usuario();
+ * 
+ * $usuario->loadById(8);
+ * 
+ * $usuario->update("teacher", "!@*t34c&");
+ * 
+ * echo $usuario;
+ */
+
+
+// DELETING A SPECIFIC USER WITH 'delete()'
+
 $usuario = new Usuario();
 
-$usuario->loadById(8);
+$usuario->loadById(3);
 
-$usuario->update("teacher", "!@*t34c&");
+$usuario->delete();
 
 echo $usuario;
 
